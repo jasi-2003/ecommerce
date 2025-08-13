@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraMart - Premium Online Shopping</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2b4c6c;
+            --secondary-color: #ffc107;
+            --accent-color: #e50914;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+            --text-color: #333;
+            --text-light: #6c757d;
+        }
+
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            color: var(--text-color);
+            background-color: #f5f5f5;
+        }
+
+        .section-title {
+            position: relative;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary-color);
+        }
+
+        /* Navigation */
+        .navbar {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: #ffffff !important;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        /* Search Bar */
+        .search-form {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-right: 1rem;
+            max-width: 400px;
+        }
+
+        .search-input {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 8px 40px 8px 15px;
+            border-radius: 30px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-icon-btn {
+            position: absolute;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.1rem;
+            padding: 0;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .search-icon-btn:hover {
+            color: var(--secondary-color);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+        }
+
+        /* Icons */
+        .cart-icon,
+        .profile-icon {
+            position: relative;
+            margin-left: 15px;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            padding: 3px 7px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .profile-img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .profile-icon:hover .profile-img {
+            border-color: var(--secondary-color);
+        }
+
+        /* Dropdown */
+        .dropdown-menu {
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .dropdown-item {
+            color: #ffffff;
+            padding: 8px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--secondary-color);
+            padding-left: 20px;
+        }
+
+        .dropdown-divider {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            margin-bottom: 40px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .hero-btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        /* Categories Section */
+        .categories-section {
+            padding: 60px 0;
+        }
+
+        .category-card {
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            height: 200px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 20px;
+            color: white;
+        }
+
+        .category-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        /* Featured Products */
+        .featured-section {
+            padding: 60px 0;
+            background-color: white;
+        }
+
+        .product-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: white;
+            margin-bottom: 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: var(--secondary-color);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .product-image-container {
+            position: relative;
+            margin-bottom: 15px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-image {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+
+        .product-category {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .product-rating {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .product-btn {
+            width: 100%;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-view {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-view:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-buy {
+            background-color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            color: white;
+        }
+
+        .btn-buy:hover {
+            background-color: #1d3a56;
+            border-color: #1d3a56;
+        }
+
+        /* Promo Banner */
+        .promo-banner {
+            background: linear-gradient(to right, var(--primary-color), #3a6a9a);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-banner:before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .promo-banner:after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            right: -30px;
+            width: 250px;
+            height: 250px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .promo-title {
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .promo-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .promo-btn {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            border: none;
+            font-weight: 600;
+            padding: 10px 25px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .promo-btn:hover {
+            background-color: #e0a800;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Testimonials */
+        .testimonial-section {
+            padding: 60px 0;
+            background-color: var(--light-color);
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .testimonial-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .author-name {
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+
+        .author-title {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        /* Newsletter */
+        .newsletter-section {
+            padding: 60px 0;
+            background: linear-gradient(rgba(43, 76, 108, 0.9), rgba(43, 76, 108, 0.9)), url('https://images.unsplash.com/photo-1486401899868-0e435ed85128?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .newsletter-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-text {
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: none;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+        }
+
+        .newsletter-btn {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background-color: #e0a800;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-logo {
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .footer-about {
+            margin-bottom: 20px;
+        }
+
+        .footer-about-text {
+            opacity: 0.8;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            margin-bottom: 30px;
+        }
+
+        .footer h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer h4:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--secondary-color);
+        }
+
+        .footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .footer a:hover {
+            color: var(--secondary-color);
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            transform: translateY(-3px);
+        }
+
+        .payment-methods {
+            margin-top: 20px;
+        }
+
+        .payment-methods img {
+            height: 30px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            transform: translateY(-5px);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1199px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                padding-top: 20px;
+            }
+
+            .search-form {
+                margin: 15px 0;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .hero-section {
+                padding: 80px 0;
+                text-align: center;
+            }
+
+            .hero-content {
+                margin: 0 auto;
+            }
+
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .promo-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .hero-section {
+                padding: 60px 0;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .promo-banner {
+                text-align: center;
+            }
+
+            .promo-title {
+                font-size: 1.5rem;
+            }
+
+            .promo-text {
+                font-size: 1rem;
+            }
+
+            .footer {
+                text-align: center;
+            }
+
+            .footer h4:after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .hero-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .category-card {
+                height: 150px;
+            }
+
+            .product-card {
+                padding: 10px;
+            }
+
+            .product-image {
+                max-height: 150px;
+            }
+
+            .back-to-top {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <!-- Brand Logo -->
+            <a class="navbar-brand" href="#">AuraMart</a>
+            <!-- Toggler for Mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navbar Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="productDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Products
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="productDropdown">
+                            <li><a class="dropdown-item" href="{% url 'product_list' %}">All Products</a></li>
+                            <li><a class="dropdown-item" href="{% url 'categortlist' %}">All Categories</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Featured</a></li>
+                            <li><a class="dropdown-item" href="#">New Arrivals</a></li>
+                            <li><a class="dropdown-item" href="#">Best Sellers</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Deals</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+                <!-- Right Side: Cart and Profile -->
+                <div class="d-flex align-items-center">
+                    {% csrf_token %}
+                    <!-- Search Form -->
+                    <form class="search-form me-3" method="GET" action="{% url 'search' %}">
+                        <input class="search-input" type="search" placeholder="Search products..." aria-label="Search" name="q">
+                        <button class="search-icon-btn" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                class="bi bi-search" viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
+                        </button>
+                    </form>
+                    <!-- Wishlist Icon -->
+                    <a href="#" class="nav-link me-2">
+                        <i class="far fa-heart"></i>
+                    </a>
+                    <!-- Cart Icon -->
+                    <a href="{% url 'cartlist' %}" class="cart-icon nav-link me-2">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge" id="cartCount">3</span>
+                    </a>
+                    <!-- Profile Dropdown -->
+                    <div class="dropdown profile-icon">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-user"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fas fa-user-edit me-2"></i> Edit Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-history me-2"></i> Order History</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-heart me-2"></i> Wishlist</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content" data-aos="fade-up">
+                <h1 class="hero-title">Summer Collection 2025</h1>
+                <p class="hero-subtitle">Discover our new arrivals with up to 40% discount on selected items. Limited time offer!</p>
+                <a href="#" class="btn btn-warning hero-btn">SHOP NOW</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Shop By Category</h2>
+            <div class="row">
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="category-card">
+                        <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Fashion" class="category-img">
+                        <div class="category-overlay">
+                            <h5 class="category-title">Fashion</h5>
+                            <p class="category-count">120 Products</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="category-card">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Electronics" class="category-img">
+                        <div class="category-overlay">
+                            <h5 class="category-title">Electronics</h5>
+                            <p class="category-count">85 Products</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="category-card">
+                        <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Home & Garden" class="category-img">
+                        <div class="category-overlay">
+                            <h5 class="category-title">Home & Garden</h5>
+                            <p class="category-count">64 Products</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="category-card">
+                        <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Beauty" class="category-img">
+                        <div class="category-overlay">
+                            <h5 class="category-title">Beauty</h5>
+                            <p class="category-count">92 Products</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="featured-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Featured Products</h2>
+            <div class="row">
+                {% for i in data %}
+                <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:'1' }}00">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            {% if i.discount %}
+                            <span class="product-badge">-{{ i.discount }}%</span>
+                            {% endif %}
+                            <img src="{{ i.image.url }}" alt="{{ i.product_name }}" class="product-image">
+                        </div>
+                        <h5 class="product-title">{{ i.product_name }}</h5>
+                        <p class="product-category">{{ i.Category }}</p>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="ms-1">(24)</span>
+                        </div>
+                        <div class="product-price">
+                            {% if i.discount %}
+                            <span class="text-danger"><del>${{ i.price }}</del></span>
+                            <span>${{ i.discounted_price }}</span>
+                            {% else %}
+                            <span>${{ i.price }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="mt-auto">
+                            <a href="{% url 'productdetails' i.id %}" class="btn btn-view btn-sm mb-2">VIEW</a>
+                            <a href="{% url 'addcart' i.id %}" class="btn btn-buy btn-sm">ADD TO CART</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="text-center mt-4" data-aos="fade-up">
+                <a href="{% url 'product_list' %}" class="btn btn-outline-primary">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promo Banner -->
+    <div class="container">
+        <div class="promo-banner" data-aos="fade-up">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h3 class="promo-title">Limited Time Offer!</h3>
+                    <p class="promo-text">Get 30% off on all electronics. Use code: <strong>ELECTRO30</strong> at checkout.</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <button class="promo-btn">SHOP NOW</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Best Sellers Section -->
+    <section class="featured-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Best Sellers</h2>
+            <div class="row">
+                {% for i in data|slice:":4" %}
+                <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter }}00">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <span class="product-badge">BESTSELLER</span>
+                            <img src="{{ i.image.url }}" alt="{{ i.product_name }}" class="product-image">
+                        </div>
+                        <h5 class="product-title">{{ i.product_name }}</h5>
+                        <p class="product-category">{{ i.Category }}</p>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="ms-1">(42)</span>
+                        </div>
+                        <div class="product-price">
+                            {% if i.discount %}
+                            <span class="text-danger"><del>${{ i.price }}</del></span>
+                            <span>${{ i.discounted_price }}</span>
+                            {% else %}
+                            <span>${{ i.price }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="mt-auto">
+                            <a href="{% url 'productdetails' i.id %}" class="btn btn-view btn-sm mb-2">VIEW</a>
+                            <a href="{% url 'addcart' i.id %}" class="btn btn-buy btn-sm">ADD TO CART</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonial-section">
+        <div class="container">
+            <h2 class="section-title text-center" data-aos="fade-up">What Our Customers Say</h2>
+            <div class="row">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"I absolutely love shopping at AuraMart! The quality of products is exceptional and the customer service is top-notch."</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson" class="testimonial-img">
+                            <div>
+                                <h6 class="author-name">Adwaith Raj</h6>
+                                <p class="author-title">Verified Buyer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"Fast delivery and great prices. I've been a loyal customer for 2 years now and never had any issues with my orders."</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael Chen" class="testimonial-img">
+                            <div>
+                                <h6 class="author-name">Akhil Karunan</h6>
+                                <p class="author-title">Verified Buyer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"The variety of products is amazing. I always find what I'm looking for, and the seasonal discounts are fantastic!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma Rodriguez" class="testimonial-img">
+                            <div>
+                                <h6 class="author-name">Sandra P S</h6>
+                                <p class="author-title">Verified Buyer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="container text-center">
+            <h2 class="newsletter-title" data-aos="fade-up">Subscribe to Our Newsletter</h2>
+            <p class="newsletter-text" data-aos="fade-up" data-aos-delay="100">Get the latest updates on new products and upcoming sales</p>
+            <form class="newsletter-form" data-aos="fade-up" data-aos-delay="200">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                <button type="submit" class="newsletter-btn">SUBSCRIBE</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <a href="#" class="footer-logo">AuraMart</a>
+                    <div class="footer-about">
+                        <p class="footer-about-text">
+                            AuraMart is your premier online shopping destination. We offer high-quality products at competitive prices with exceptional customer service.
+                        </p>
+                    </div>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-links">
+                        <h4>SHOP</h4>
+                        <a href="#">All Products</a>
+                        <a href="#">Featured</a>
+                        <a href="#">New Arrivals</a>
+                        <a href="#">Sale Items</a>
+                        <a href="#">Best Sellers</a>
+                        <a href="#">Gift Cards</a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-links">
+                        <h4>CUSTOMER SERVICE</h4>
+                        <a href="#">Contact Us</a>
+                        <a href="#">FAQs</a>
+                        <a href="#">Shipping Policy</a>
+                        <a href="#">Returns & Exchanges</a>
+                        <a href="#">Track Order</a>
+                        <a href="#">Size Guide</a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-links">
+                        <h4>ABOUT</h4>
+                        <a href="#">Our Story</a>
+                        <a href="#">Careers</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms & Conditions</a>
+                        <a href="#">Blog</a>
+                        <a href="#">Press</a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-links">
+                        <h4>CONTACT</h4>
+                        <a href="#"><i class="fas fa-map-marker-alt me-2"></i> Kakkanad,Ernagulam</a>
+                        <a href="#"><i class="fas fa-phone me-2"></i> (+91) 7994175572</a>
+                        <a href="#"><i class="fas fa-envelope me-2"></i> auramart@gmail.com</a>
+                        <div class="payment-methods mt-3">
+                            <img src="https://via.placeholder.com/40x25" alt="Visa">
+                            <img src="https://via.placeholder.com/40x25" alt="Mastercard">
+                            <img src="https://via.placeholder.com/40x25" alt="PayPal">
+                            <img src="https://via.placeholder.com/40x25" alt="Apple Pay">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 AuraMart. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Bootstrap JS and Custom Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('active');
+            } else {
+                backToTopButton.classList.remove('active');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Update cart count
+        let cartCount = 3;
+        function addToCart() {
+            cartCount++;
+            document.getElementById('cartCount').innerText = cartCount;
+            
+            // Show notification
+            const notification = document.createElement('div');
+            notification.className = 'position-fixed bottom-0 end-0 p-3';
+            notification.style.zIndex = '11';
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast show';
+            toast.role = 'alert';
+            toast.setAttribute('aria-live', 'assertive');
+            toast.setAttribute('aria-atomic', 'true');
+            
+            toast.innerHTML = `
+                <div class="toast-header bg-success text-white">
+                    <strong class="me-auto">Success</strong>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Item added to cart successfully!
+                </div>
+            `;
+            
+            notification.appendChild(toast);
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

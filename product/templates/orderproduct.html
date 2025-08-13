@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {{item.product_name}}
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="number" name="quantity" min="1" max="{{ item.stock }}" >
+        <button type="submit">submit</button>
+    </form>
+
+    <h3> total :{{total}}</h3>
+    <a href="{% url addoder_cart %}"> <button type="submit">add</button></a>
+</body>
+</html>

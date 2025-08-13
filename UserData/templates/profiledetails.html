@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .profile-container {
+            max-width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .profile-info {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="profile-container">
+        {% for i in data %}
+            <h2>{{ i.user.username }}</h2>
+            
+            {% if i.profile_picture %}
+                <img src="{{ i.profile_picture.url }}" alt="Profile Picture">
+            {% else %}
+                <img src="https://via.placeholder.com/100" alt="Default Profile">
+            {% endif %}
+
+            <div class="profile-info">
+                <p><strong>Phone:</strong> {{ i.phone }}</p>
+                <p><strong>Address:</strong> {{ i.address }}</p>
+                <p><strong>City:</strong> {{ i.city }}</p>
+                <p><strong>State:</strong> {{ i.state }}</p>
+                <p><strong>Country:</strong> {{ i.country }}</p>
+                <p><strong>Pincode:</strong> {{ i.pincode }}</p>
+            </div>
+        {% empty %}
+            <p>No profile data available.</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

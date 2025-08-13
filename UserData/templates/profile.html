@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-hover: #3a56d4;
+            --text-color: #2b2d42;
+            --light-gray: #f8f9fa;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7ff;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            box-shadow: var(--shadow);
+            border-radius: 15px;
+            animation: fadeIn 0.8s cubic-bezier(0.39, 0.575, 0.565, 1);
+        }
+        
+        h2 {
+            text-align: center;
+            color: var(--text-color);
+            margin-bottom: 25px;
+            position: relative;
+            font-weight: 600;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .profile-picture-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 25px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .profile-picture {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid #e9ecef;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .profile-picture-container:hover .profile-picture {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary-color);
+        }
+        
+        .profile-picture-edit {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: var(--primary-color);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+        
+        .profile-picture-container:hover .profile-picture-edit {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        form {
+            margin-top: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        input.form-control, 
+        textarea.form-control,
+        select.form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: var(--light-gray);
+        }
+        
+        input.form-control:focus, 
+        textarea.form-control:focus,
+        select.form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            outline: none;
+            background-color: white;
+        }
+        
+        button.btn-primary {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+            box-shadow: var(--shadow);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        button.btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(67, 97, 238, 0.3);
+        }
+        
+        button.btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        /* File input styling */
+        .file-input {
+            display: none;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+            
+            .profile-picture-container {
+                width: 120px;
+                height: 120px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            h2 {
+                font-size: 24px;
+            }
+            
+            input.form-control, 
+            textarea.form-control,
+            select.form-control {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+            
+            button.btn-primary {
+                padding: 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>My Profile</h2>
+    
+    <label for="id_profile_picture" class="profile-picture-container">
+        {% if profile.profile_picture %}
+            <img src="{{ profile.profile_picture.url }}" class="profile-picture" alt="Profile Picture">
+        {% else %}
+            <img src="https://via.placeholder.com/150" class="profile-picture" alt="Default Profile">
+        {% endif %}
+        <div class="profile-picture-edit">
+            <i class="fas fa-camera"></i>
+        </div>
+    </label>
+    
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_profile_picture">Profile Picture</label>
+            <input type="file" name="profile_picture" accept="image/*" id="id_profile_picture" class="file-input">
+        </div>
+        
+        {{ form.as_p }}
+        
+        <button type="submit" class="btn btn-primary pulse-animation">
+            Update Profile
+        </button>
+    </form>
+</div>
+
+<!-- Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<script>
+    // Profile picture preview
+    document.getElementById('id_profile_picture').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.querySelector('.profile-picture').src = event.target.result;
+                
+                // Add temporary animation
+                const profilePic = document.querySelector('.profile-picture');
+                profilePic.classList.add('pulse-animation');
+                setTimeout(() => {
+                    profilePic.classList.remove('pulse-animation');
+                }, 2000);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    
+    // Click profile picture to trigger file input
+    document.querySelector('.profile-picture-container').addEventListener('click', function(e) {
+        if (e.target !== this.querySelector('i')) {
+            document.getElementById('id_profile_picture').click();
+        }
+    });
+</script>
+</body>
+</html>
