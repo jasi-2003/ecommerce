@@ -1,9 +1,9 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.views.generic import View ,CreateView  ,DeleteView ,DetailView ,UpdateView ,ListView
 from UserData.models import User
 from django.urls import reverse_lazy
-from product.models import CategoryModel , ProductModel ,ReviewModels,ItemModel ,Cart,OrderItemModel,Ordermodel
-from product.forms import AddproductForm ,ReviewForm
+from product.models import *
+from product.forms import *
 from django.utils.decorators import method_decorator
 from django.db import IntegrityError
 
@@ -220,94 +220,81 @@ class ReviewDelete(DeleteView):
 
 
 # For Carts   
-
-
 class AdditeamsView(View):
+    def get(self, request, **kwargs):
+        id = kwargs.get("pk")
+        product = get_object_or_404(ProductModel, id=id)
 
-    def get (self,request,**kwargs):
-
-        id = kwargs.get ("pk")
-
-        iteam= ProductModel.objects.get(id=id)
-
-        if iteam.stock > 0:
-
-            cart = Cart.objects.get(user=request.user)
+        if product.stock > 0:
+            cart, _ = Cart.objects.get_or_create(user=request.user)
 
             try:
-
-                ItemModel.objects.create(cart =cart ,product =iteam)    #product model iteammodelsil product
-
-                print(cart.total_price)
-
+                ItemModel.objects.create(cart=cart, product=product, quantity=1)
             except IntegrityError:
+                item = ItemModel.objects.get(cart=cart, product=product)
+                item.quantity += 1
+                item.save()
 
+            # ✅ Just access property, don’t assign
+            print(cart.total_price)
 
-                return redirect("product_list")
-            
-        return redirect("cartlist")    
+        return redirect("cartlist")
 
-
-@method_decorator(decorator= is_login ,name="dispatch")
+@method_decorator(decorator=is_login, name="dispatch")
 class CartiteamList(View):
 
-    def get (self,request):
+    def get(self, request):
+        # ✅ Prevent DoesNotExist by auto-creating a cart
+        cart, created = Cart.objects.get_or_create(user=request.user)
 
-        cart = Cart.objects.get(user=request.user)
-
+        # ✅ Get cart items
         data = ItemModel.objects.filter(cart=cart)
 
-        list=[]
+        # ✅ Calculate subtotal for each item
+        subtotal_list = [i.product.price * i.quantity for i in data]
 
-        for i in data:
+        # ✅ Combine items with subtotals
+        c_items = zip(data, subtotal_list)
 
-            subtotal=i.product.price * i.quantity
+        # ✅ Count items in cart
+        count = len(data)
 
-            list.append(subtotal)
+        # ✅ Total (calculated, don’t assign to cart)
+        total = sum(subtotal_list)
 
-        c_items = zip(data,list)
+        # Debugging
+        print("Item count:", count)
+        print("Subtotals:", subtotal_list)
+        print("Cart total:", total)
 
-        count=len(data)
-        print(count)
-
-        print(c_items)
-
-        print(cart.total_price)
-
-
-
-
-        return render (request,"cart_list.html" ,{"c_items":c_items,'total':cart.total_price,'count':count})
+        return render(
+            request,
+            "cart_list.html",
+            {"c_items": c_items, "total": total, "count": count},
+        )
 
 
-     
-@method_decorator(decorator= is_login ,name="dispatch")
+
+
+@method_decorator(decorator=is_login, name="dispatch")
 class Updatecart(View):
 
-    def post (self,request,**kwargs):
-
+    def post(self, request, **kwargs):
         id = kwargs.get("pk")
+        cart = Cart.objects.get(user=request.user)
 
-        new_quanitity = request.POST.get("quantity")
+        # Ensure the item belongs to the logged-in user’s cart
+        data = get_object_or_404(ItemModel, id=id, cart=cart)
 
-        data = ItemModel.objects.get(id = id)
+        new_quantity = int(request.POST.get("quantity"))
 
-        if data.quantity  > data.product.stock :
-
+        if new_quantity > data.product.stock:
             data.quantity = data.product.stock
-
-            data.save()
-
-            return redirect ("registrationh")
-
         else:
+            data.quantity = new_quantity
 
-            data.quantity = new_quanitity
-
-            data.save()
-
-        return redirect("cartlist")    
- 
+        data.save()
+        return redirect("cartlist")
 # @method_decorator(decorator= is_user ,name="dispatch")
 class Deletecarts(View):
 
@@ -362,26 +349,30 @@ class Addorderproduct(View):
         OrderItemModel.objects.create(order_id=user_id,quantity =quantity,item=item,status='pending')
 
         return render(request,"orderproduct.html",{"total":total})
-
 class Addorder_cart(View):
+    def post(self, request):
+        user_cart = Cart.objects.get(user=request.user)
+        items = ItemModel.objects.filter(cart=user_cart)
 
-    def get (self,request):
+        total = user_cart.total_price
 
-        user = Cart.objects.get(user =request.user)
+        # create order for user
+        order = Ordermodel.objects.create(user=request.user)
 
-        items =ItemModel.objects.filter(cart=user)
-
-        total = Cart.total_price
-
-        user =Ordermodel.objects.get(user = request.user)
-
+        # create order items
         for i in items:
+            OrderItemModel.objects.create(
+                order=order,   # ✅ fixed
+                item=i.product,
+                quantity=i.quantity,
+                status="pending"
+            )
 
-            OrderItemModel.objects.create(order_id= user ,item =i.product,quantity = i.quantity,status = "pending")
-
+        # clear cart after ordering
         items.delete()
 
-        return render(request,"orderpage.html",{"total":total})
+        return render(request, "orderpage.html", {"total": total})
+
 
 
 

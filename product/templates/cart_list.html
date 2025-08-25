@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,8 +38,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .page-title {
@@ -73,8 +81,15 @@
         }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .cart-item:hover {
@@ -244,16 +259,16 @@
             .product-image-container {
                 height: 200px;
             }
-            
+
             .product-image {
                 border-radius: var(--border-radius) var(--border-radius) 0 0;
             }
-            
+
             .cart-actions {
                 flex-direction: column;
                 gap: 10px;
             }
-            
+
             .cart-actions .btn {
                 width: 100%;
                 margin-right: 0;
@@ -274,9 +289,17 @@
 
         /* Pulse animation for updates */
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
 
         .updating {
@@ -284,84 +307,90 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1 class="page-title">Your Shopping Cart</h1>
-        
+
         {% if c_items %}
-            <a href="{% url 'product_list' %}" class="btn btn-secondary mb-4">
-                <i class="fas fa-arrow-left me-2"></i>Continue Shopping
-            </a>
+        <a href="{% url 'product_list' %}" class="btn btn-secondary mb-4">
+            <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+        </a>
 
-            {% for i, j in c_items %}
-            <div class="cart-item" id="cart-item-{{ i.id }}">
-                <div class="row g-0">
-                    <div class="col-md-3 product-image-container">
-                        <img src="{{ i.product.image.url }}" class="product-image w-100 h-100" alt="{{ i.product.product_name }}">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="p-4">
-                            <h3 class="product-title">
-                                <a href="{{ i.product.get_absolute_url }}">{{ i.product.product_name }}</a>
-                            </h3>
-                            <p class="product-description">{{ i.product.description|truncatewords:20 }}</p>
-                            <p class="product-price">${{ i.product.price|floatformat:2 }}</p>
-                            
-                            <div class="product-quantity">
-                                <span class="me-2">Quantity:</span>
-                                <form method="post" action="{% url 'cart_update' i.id %}" class="d-flex align-items-center">
-                                    {% csrf_token %}
-                                    <button type="button" class="quantity-btn minus" data-id="{{ i.id }}">-</button>
-                                    <input type="number" name="quantity" min="1" max="{{ i.product.stock }}" 
-                                           value="{{ i.quantity }}" class="quantity-input" id="quantity-{{ i.id }}">
-                                    <button type="button" class="quantity-btn plus" data-id="{{ i.id }}">+</button>
-                                    <button type="submit" class="btn btn-sm btn-outline-primary ms-3 update-btn" style="display:none;">
-                                        Update
-                                    </button>
-                                </form>
-                            </div>
-                            
-                            <p class="product-subtotal mt-2">
-                                <strong>Subtotal:</strong> $<span id="subtotal-{{ i.id }}">{{ j|floatformat:2 }}</span>
-                            </p>
+        {% for i, j in c_items %}
+        <div class="cart-item" id="cart-item-{{ i.id }}">
+            <div class="row g-0">
+                <div class="col-md-3 product-image-container">
+                    <img src="{{ i.product.image.url }}" class="product-image w-100 h-100"
+                        alt="{{ i.product.product_name }}">
+                </div>
+                <div class="col-md-6">
+                    <div class="p-4">
+                        <h3 class="product-title">
+                            <a href="{{ i.product.get_absolute_url }}">{{ i.product.product_name }}</a>
+                        </h3>
+                        <p class="product-description">{{ i.product.description|truncatewords:20 }}</p>
+                        <p class="product-price">${{ i.product.price|floatformat:2 }}</p>
+
+                        <div class="product-quantity">
+                            <span class="me-2">Quantity:</span>
+                            <form method="post" action="{% url 'cart_update' i.id %}" class="d-flex align-items-center">
+                                {% csrf_token %}
+                                <button type="button" class="quantity-btn minus" data-id="{{ i.id }}">-</button>
+                                <input type="number" name="quantity" min="1" max="{{ i.product.stock }}"
+                                    value="{{ i.quantity }}" class="quantity-input" id="quantity-{{ i.id }}">
+                                <button type="button" class="quantity-btn plus" data-id="{{ i.id }}">+</button>
+                                <button type="submit" class="btn btn-sm btn-outline-primary ms-3 update-btn"
+                                    style="display:none;">
+                                    Update
+                                </button>
+                            </form>
                         </div>
+
+                        <p class="product-subtotal mt-2">
+                            <strong>Subtotal:</strong> $<span id="subtotal-{{ i.id }}">{{ j|floatformat:2 }}</span>
+                        </p>
                     </div>
-                    <div class="col-md-3">
-                        <div class="p-4 d-flex flex-column h-100 justify-content-between">
-                            <div class="cart-actions mt-auto">
-                                <a href="{% url 'cartdelete' i.id %}" class="btn btn-danger remove-btn" data-id="{{ i.id }}">
-                                    <i class="fas fa-trash-alt me-2"></i>Remove
-                                </a>
-                            </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-4 d-flex flex-column h-100 justify-content-between">
+                        <div class="cart-actions mt-auto">
+                            <a href="{% url 'cartdelete' i.id %}" class="btn btn-danger remove-btn"
+                                data-id="{{ i.id }}">
+                                <i class="fas fa-trash-alt me-2"></i>Remove
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+        </div>
+        {% endfor %}
 
-            <div class="cart-total">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h3>Order Summary</h3>
-                        <p>Total Items: <strong>{{ count }}</strong></p>
-                    </div>
-                    <div class="col-md-6 text-md-end">
-                        <h3>Total: <span class="total-price">${{ total }}</span></h3>
-                        <a href="{% url 'addoder_cart' %}" class="btn btn-success mt-3">
-                            <i class="fas fa-credit-card me-2"></i>Proceed to Checkout
-                        </a>
-                    </div>
+        <div class="cart-total">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Order Summary</h3>
+                    <p>Total Items: <strong>{{ count }}</strong></p>
                 </div>
+                <form method="post" action="{% url 'addoder_cart' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success mt-3">
+                        <i class="fas fa-credit-card me-2"></i>Proceed to Checkout
+                    </button>
+                </form>
+
+
             </div>
+        </div>
         {% else %}
-            <div class="empty-cart">
-                <i class="fas fa-shopping-cart"></i>
-                <h3>Your cart is empty</h3>
-                <p>Looks like you haven't added any items to your cart yet.</p>
-                <a href="{% url 'product_list' %}" class="btn btn-primary">
-                    <i class="fas fa-shopping-bag me-2"></i>Start Shopping
-                </a>
-            </div>
+        <div class="empty-cart">
+            <i class="fas fa-shopping-cart"></i>
+            <h3>Your cart is empty</h3>
+            <p>Looks like you haven't added any items to your cart yet.</p>
+            <a href="{% url 'product_list' %}" class="btn btn-primary">
+                <i class="fas fa-shopping-bag me-2"></i>Start Shopping
+            </a>
+        </div>
         {% endif %}
     </div>
 
@@ -369,18 +398,18 @@
     <script>
         // Quantity controls
         document.querySelectorAll('.quantity-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 const id = this.getAttribute('data-id');
                 const input = document.getElementById(`quantity-${id}`);
                 const form = input.closest('form');
                 const updateBtn = form.querySelector('.update-btn');
-                
+
                 if (this.classList.contains('minus')) {
                     if (input.value > 1) input.value--;
                 } else {
                     if (input.value < parseInt(input.max)) input.value++;
                 }
-                
+
                 // Show update button when quantity changes
                 updateBtn.style.display = 'inline-block';
             });
@@ -388,7 +417,7 @@
 
         // Auto-update when quantity input changes
         document.querySelectorAll('.quantity-input').forEach(input => {
-            input.addEventListener('change', function() {
+            input.addEventListener('change', function () {
                 const form = this.closest('form');
                 const updateBtn = form.querySelector('.update-btn');
                 updateBtn.style.display = 'inline-block';
@@ -397,14 +426,14 @@
 
         // Remove item animation
         document.querySelectorAll('.remove-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
+            btn.addEventListener('click', function (e) {
                 e.preventDefault();
                 const id = this.getAttribute('data-id');
                 const cartItem = document.getElementById(`cart-item-${id}`);
-                
+
                 // Add removal animation
                 cartItem.classList.add('removing');
-                
+
                 // Redirect after animation completes
                 setTimeout(() => {
                     window.location.href = this.href;
@@ -414,7 +443,7 @@
 
         // Update animation
         document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', function(e) {
+            form.addEventListener('submit', function (e) {
                 const cartItem = this.closest('.cart-item');
                 cartItem.classList.add('updating');
             });
@@ -422,7 +451,7 @@
 
         // Show update button when quantity is manually edited
         document.querySelectorAll('.quantity-input').forEach(input => {
-            input.addEventListener('input', function() {
+            input.addEventListener('input', function () {
                 const form = this.closest('form');
                 const updateBtn = form.querySelector('.update-btn');
                 updateBtn.style.display = 'inline-block';
@@ -430,4 +459,5 @@
         });
     </script>
 </body>
+
 </html>

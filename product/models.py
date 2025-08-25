@@ -95,11 +95,10 @@ class ItemModel(models.Model):  #cartitem models
 
 
 #oder 
-
 class Ordermodel(models.Model):
-
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # 👈 change here
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    status = models.CharField(max_length=20, default="pending")
     created_at = models.DateField(auto_now_add=True)
 
     
@@ -107,16 +106,11 @@ class Ordermodel(models.Model):
 
 
 class OrderItemModel(models.Model):
+    order = models.ForeignKey(Ordermodel, on_delete=models.CASCADE)  # 👈 renamed
+    item = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    status = models.CharField(max_length=20)
 
-
-
-    order_id = models.ForeignKey(Ordermodel,on_delete=models.CASCADE)
-
-    item = models.ForeignKey(ProductModel,on_delete=models.CASCADE)
-
-    quantity = models.IntegerField(default=1)
-
-    status = models.CharField(max_length=100,choices=[('pending','pending'),('completed','completed'),('cancelled','cancelled')])
 
 
 

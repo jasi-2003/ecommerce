@@ -17,6 +17,14 @@ from .models import UserProfile
 
 # Create your views here.
 
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def profile_view(request):
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+    return render(request, "profile.html", {"profile": profile})
+
+
 class Homepage(View):
 
     def get(self,request):
