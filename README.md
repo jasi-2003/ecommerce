@@ -22,4 +22,4 @@ Installation:
  •  Install dependencies: pip install -r requirements.txt
  •  Run migrations: python manage.py migrate
  •  Start server: python manage.py runserver
- •  Usage  : Visit localhost:8000 in your browser to access the application.
+ •  Usage  : Visit localhost:8000 in your browser to access the application
